@@ -1,5 +1,8 @@
 # toDoApp
 
+#install packages
+use npm install in both front and backend files
+
 # Configuration
 Create ```.env``` file inside ```backend``` directory and copy the following code
 
@@ -10,3 +13,5 @@ GMAIL_PASSWORD=password created inside 'App Password' section under google accou
 PORT=8000
 JWT_SECRET=a random secret key eg. thisisasecretkey
 ```
+#run 
+npm start for run the app
