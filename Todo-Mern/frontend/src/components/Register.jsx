@@ -3,10 +3,19 @@ import { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from "../Axios/axios.js"
 import TokenContext from '../context/TokenContext.js';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 function Register() {
     const [formData, setFormData] = useState({})
     const {userToken, tokenDispatch, userDispatch } = useContext(TokenContext);
     const [error, setError] = useState();
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -58,13 +67,20 @@ function Register() {
                                         placeholder="Email address"
                                         onChange={handleChange} />
                                 </div>
-                                <div className="mb-6">
+                                <div className="mb-6 relative">
                                     <input
-                                        type="password"
+                                        type={showPassword ? "text" : "password"}
                                         name='password'
                                         className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                         placeholder="Password"
                                         onChange={handleChange} />
+                                    <button 
+                                        type="button" 
+                                        onClick={togglePasswordVisibility}
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-700 cursor-pointer"
+                                    >
+                                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                    </button>
                                 </div>
                                 <div className="flex justify-between items-center mb-6">
                                     <div className="form-group form-check">

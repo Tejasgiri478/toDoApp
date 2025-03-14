@@ -28,21 +28,23 @@ const sendMail = (email, subject, title, description) => {
     });
 }
 const addTask = async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, category } = req.body;
     const userId = req.user.id;
     const user = await userModel.find({_id: userId});
-    const newTask = new taskModel({ title, description, completed: false, userId })
-    newTask.save()
-        .then(() => {
-            sendMail(user[0].email, "Task Added", title, description)
-            return (res.status(200).json({ message: "Task added successfully" }))
-        })
-        .catch((error) => {
-            return (
-                res.status(500).json({ message: error.message })
-            )
-        }
-        )
+    const newTask = new taskModel({ 
+        title, 
+        description, 
+        category: category || 'others', // Default to 'others' if not provided
+        completed: false, 
+        userId 
+    })
+    try {
+        const savedTask = await newTask.save();
+        sendMail(user[0].email, "Task Added", title, description);
+        return res.status(200).json(savedTask);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
 }
 const removeTask = (req, res) => {
     const { id } = req.body;
@@ -59,7 +61,7 @@ const getTask = (req, res) => {
 }
 
 const updateTask = async (req, res) => {
-    const { id, title, description } = req.body;
+    const { id, title, description, category } = req.body;
     try {
         const task = await taskModel.findById(id);
         
@@ -76,14 +78,11 @@ const updateTask = async (req, res) => {
         // Update task
         const updatedTask = await taskModel.findByIdAndUpdate(
             id,
-            { title, description },
+            { title, description, category },
             { new: true } // Returns the updated document
         );
 
-        res.status(200).json({
-            message: "Task updated successfully",
-            task: updatedTask
-        });
+        res.status(200).json(updatedTask);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -111,10 +110,7 @@ const markDone = async (req, res) => {
             { new: true }
         );
 
-        res.status(200).json({
-            message: "Task status updated successfully",
-            task: updatedTask
-        });
+        res.status(200).json(updatedTask);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

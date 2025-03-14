@@ -2,10 +2,19 @@ import React, { useState, useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import axios from "../Axios/axios.js"
 import TokenContext from '../context/TokenContext.js';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 function Login() {
     const [formData, setFormData] = useState({});
     const { userToken, tokenDispatch, userDispatch } = useContext(TokenContext);
     const [error, setError] = useState();
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -80,14 +89,21 @@ function Login() {
                                         placeholder="Email address" />
                                 </div>
                                 {/* Password input */}
-                                <div className="mb-6">
+                                <div className="mb-6 relative">
                                     <input
-                                        type="password"
+                                        type={showPassword ? "text" : "password"}
                                         name='password'
                                         onChange={handleChange}
                                         className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                         id="passInput"
                                         placeholder="Password" />
+                                    <button 
+                                        type="button" 
+                                        onClick={togglePasswordVisibility}
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-700 cursor-pointer"
+                                    >
+                                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                    </button>
                                 </div>
                                 <div className="flex justify-between items-center mb-6">
                                     <div className="form-group form-check">
@@ -98,30 +114,33 @@ function Login() {
                                         <label className="form-check-label inline-block text-gray-800" htmlFor="exampleCheck2">Remember me</label>
                                     </div>
                                     <Link
-                                        to={"/forgotPassword"}
-                                    >Forgot Password</Link>
+                                        to="/forgotPassword"
+                                        className="text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out">
+                                        Forgot password?
+                                    </Link>
                                 </div>
-                                <div className="text-center lg:text-left">
-                                    <button
-                                        type="submit"
-                                        onClick={handleSubmit}
-                                        className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                        Login
-                                    </button>
-                                    <p className="text-sm font-semibold mt-2 pt-1 mb-0">
-                                        Don't have an account?
-                                        <Link
-                                            to={"/register"}
-                                            className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-                                        >Register</Link>
-                                    </p>
+                                {/* Submit button */}
+                                <button
+                                    type="submit"
+                                    className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+                                    data-mdb-ripple="true"
+                                    data-mdb-ripple-color="light">
+                                    Sign in
+                                </button>
+                                <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+                                    <p className="text-center font-semibold mx-4 mb-0">Don't have an account?</p>
                                 </div>
+                                <Link
+                                    to="/register"
+                                    className="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-200 transition duration-150 ease-in-out w-full text-center"
+                                >
+                                    Register
+                                </Link>
                             </form>
                         </div>
                     </div>
                 </div>
             </section>
-
         </div>
     );
 }

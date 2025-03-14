@@ -2,6 +2,7 @@ import React from 'react';
 import TaskIndicator from './TaskIndicator';
 import CreateTask from './createTask/CreateTask';
 import { Outlet } from 'react-router-dom';
+
 function Layout() {
     return (
         <div>
@@ -14,7 +15,6 @@ function Layout() {
                     <div className='indicator'>
                         <TaskIndicator />
                     </div>
-
                 </div>
             </div>
         </div>
