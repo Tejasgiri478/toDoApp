@@ -3,7 +3,9 @@ import { useContext } from 'react';
 import TaskContext from '../../context/TaskContext';
 import TokenContext from '../../context/TokenContext';
 import axios from "../../Axios/axios.js"
+import Swal from 'sweetalert2'
 import "./createTask.css"
+
 function CreateTask() {
     const { dispatch } = useContext(TaskContext)
     const {userToken} = useContext(TokenContext)
@@ -20,9 +22,24 @@ function CreateTask() {
             })
             //setToast(res.data)
             // showToast();
-          } catch (error) {
+            
+            // Show success message
+            Swal.fire({
+                title: 'Congratulations!',
+                text: 'Your task has been added successfully',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })
+        } catch (error) {
             console.log(error);
-          }
+            // Show error message
+            Swal.fire({
+                title: 'Error!',
+                text: 'Error in adding task',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
+        }
         dispatch({
             type: "ADD_TASK",
             title,

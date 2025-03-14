@@ -57,4 +57,67 @@ const getTask = (req, res) => {
         .then((data) => res.status(200).json(data))
         .catch((error) => res.status(501).json({ message: error.message }))
 }
-export { addTask, getTask,removeTask }
+
+const updateTask = async (req, res) => {
+    const { id, title, description } = req.body;
+    try {
+        const task = await taskModel.findById(id);
+        
+        // Check if task exists
+        if (!task) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+        
+        // Check if user owns this task
+        if (task.userId.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Not authorized to update this task" });
+        }
+
+        // Update task
+        const updatedTask = await taskModel.findByIdAndUpdate(
+            id,
+            { title, description },
+            { new: true } // Returns the updated document
+        );
+
+        res.status(200).json({
+            message: "Task updated successfully",
+            task: updatedTask
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const markDone = async (req, res) => {
+    const { id } = req.body;
+    try {
+        const task = await taskModel.findById(id);
+        
+        // Check if task exists
+        if (!task) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+        
+        // Check if user owns this task
+        if (task.userId.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Not authorized to update this task" });
+        }
+
+        // Toggle completed status
+        const updatedTask = await taskModel.findByIdAndUpdate(
+            id,
+            { completed: !task.completed },
+            { new: true }
+        );
+
+        res.status(200).json({
+            message: "Task status updated successfully",
+            task: updatedTask
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export { addTask, getTask, removeTask, updateTask, markDone }
