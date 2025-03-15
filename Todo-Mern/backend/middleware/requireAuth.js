@@ -1,17 +1,23 @@
 import jwt from 'jsonwebtoken';
+import { AppError } from './errorHandler.js';
+
 const requireAuth = async (req, res, next) => {
     const { authorization } = req.headers;
+    
     if (!authorization) {
-        return res.status(401).json({message:'Unauthorized'});
+        return next(new AppError('Authentication required. Please log in.', 401));
     }
+    
     const token = authorization.split(' ')[1]+"";
+    
     try {
-        const decoded =  jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
         req.token = token;
         next();
     } catch (error) {
-        return res.status(500).json({message:error.message});
+        return next(new AppError('Invalid or expired token. Please log in again.', 401));
     }
 }
+
 export default requireAuth;

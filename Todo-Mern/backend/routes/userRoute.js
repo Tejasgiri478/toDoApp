@@ -1,10 +1,20 @@
 import express from 'express';
-import { loginUser, registerUser,getUser } from '../controllers/userController.js';
+import { loginUser, registerUser, getUser } from '../controllers/userController.js';
 import requireAuth from '../middleware/requireAuth.js';
+import { validate } from '../middleware/validator.js';
+import { 
+  loginSchema, 
+  registerSchema, 
+  updateProfileSchema 
+} from '../schemas/userSchema.js';
+
 const router = express.Router();
 
-router.post("/login",loginUser);
-router.post("/register",registerUser);
-router.get("/getuser", requireAuth, getUser)
+// Auth routes
+router.post("/login", validate(loginSchema), loginUser);
+router.post("/register", validate(registerSchema), registerUser);
+
+// Protected routes
+router.get("/getuser", requireAuth, getUser);
 
 export default router;
