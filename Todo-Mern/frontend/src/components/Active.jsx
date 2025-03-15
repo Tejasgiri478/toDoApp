@@ -1,26 +1,31 @@
 import React, { useContext } from 'react';
 import Task from './Task/Task';
 import TaskContext from '../context/TaskContext';
+import { FaSpinner } from 'react-icons/fa';
 
 function Active() {
     const { tasks } = useContext(TaskContext);
-
-    // Filter active (incomplete) tasks and reverse the order
-    const activeTasks = tasks.filter(task => !task.completed).slice().reverse();
+    const activeTasks = tasks.filter(task => !task.completed);
 
     return (
         <div>
-            {activeTasks.length !== 0 ? (
-                activeTasks.map((task, index) => (
-                    <Task
-                        key={activeTasks.length - 1 - index} // Ensuring unique keys
-                        task={task}
-                        id={activeTasks.length - 1 - index} // Reflecting original index
-                    />
-                ))
-            ) : (
-                <h1>No Task Found</h1>
-            )}
+            {
+                activeTasks.length !== 0 ? (
+                    activeTasks.slice().reverse().map((task, index) => (
+                        <Task
+                            key={index}
+                            task={task}
+                            id={index}
+                        />
+                    ))
+                ) : (
+                    <div className="flex flex-col items-center justify-center py-10 text-gray-500">
+                        <FaSpinner className="text-5xl mb-4 text-blue-400" />
+                        <h1 className="text-xl font-medium">No Active Tasks</h1>
+                        <p className="mt-2 text-sm">All your tasks are completed!</p>
+                    </div>
+                )
+            }
         </div>
     );
 }

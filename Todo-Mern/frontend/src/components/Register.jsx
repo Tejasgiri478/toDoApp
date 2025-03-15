@@ -7,6 +7,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
+import { FaCheckCircle } from 'react-icons/fa';
 
 function Register() {
     const [formData, setFormData] = useState({})
@@ -24,7 +25,7 @@ function Register() {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -47,7 +48,7 @@ function Register() {
             setIsLoading(false);
         }
     }
-    
+
     return (
         <div>
             {userToken && <Navigate to="/" />}
@@ -59,10 +60,14 @@ function Register() {
                         </div>
                         <div className="md:w-8/12 lg:w-6/12 lg:ml-10">
                             <div className="flex flex-col items-center mb-4">
-                                <div className="bg-green-100 p-3 rounded-full mb-2">
-                                    <PersonAddIcon className="text-green-600 text-3xl" />
+                                <div className="inline-block p-3 bg-gradient-to-r from-green-500 to-teal-500 rounded-full mb-3 shadow-lg">
+                                    <PersonAddIcon className="text-white text-4xl" />
                                 </div>
-                                <h2 className="text-2xl font-bold">Create your account</h2>
+                                <h2 className="text-2xl font-bold">
+                                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500">
+                                        Create Account
+                                    </span>
+                                </h2>
                                 <p className="text-gray-500">Start organizing your tasks today</p>
                             </div>
                             
@@ -129,7 +134,7 @@ function Register() {
                                     </div>
                                     <p className="text-xs text-gray-500 mt-1">Password must be at least 6 characters</p>
                                 </div>
-                                
+
                                 <div className="flex justify-between items-center mb-4">
                                     <div className="form-group form-check">
                                         <input 
@@ -143,9 +148,9 @@ function Register() {
                                         </label>
                                     </div>
                                 </div>
-                                
-                                <button 
-                                    type="submit" 
+
+                                <button
+                                    type="submit"
                                     className={`inline-block px-6 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full ${isLoading || success ? 'bg-green-400' : 'bg-green-600 hover:bg-green-700 focus:bg-green-700 active:bg-green-800'}`}
                                     disabled={isLoading || success}
                                 >

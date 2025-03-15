@@ -10,7 +10,9 @@ import logger from "./utils/logger.js"
 import userRouter from "./routes/userRoute.js"
 import taskRouter from "./routes/taskRoute.js"
 import forgotPasswordRouter from "./routes/forgotPassword.js"
+import adminRouter from "./routes/adminRoute.js"
 import { notFound, errorHandler } from "./middleware/errorHandler.js"
+import adminModel from "./models/adminModel.js"
 
 //app config
 const app = express()
@@ -47,13 +49,18 @@ app.use(limiter) // Rate limiting
 mongoose.connect(config.mongoUri, {
     useNewUrlParser: true,
 })
-.then(() => logger.info("Database connected successfully"))
+.then(() => {
+    logger.info("Database connected successfully");
+    // Create default admin account if none exists
+    adminModel.createDefaultAdmin();
+})
 .catch((err) => logger.error("Database connection error", { error: err.message }));
 
 //api endpoints
 app.use("/api/user", userRouter)
 app.use("/api/task", taskRouter)
 app.use("/api/forgotPassword", forgotPasswordRouter)
+app.use("/api/admin", adminRouter)
 
 // Error handling
 app.use(notFound);

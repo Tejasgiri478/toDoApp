@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from "../../Axios/axios.js";
 import KeyIcon from '@mui/icons-material/Key';
+import { FaCheckCircle } from 'react-icons/fa';
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");
@@ -31,13 +32,15 @@ function ForgotPassword() {
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
                 <div className="text-center">
-                    <div className="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-blue-100">
-                        <KeyIcon className="h-8 w-8 text-blue-600" />
+                    <div className="inline-block p-3 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mb-3 shadow-lg mx-auto">
+                        <KeyIcon className="text-white text-4xl" />
                     </div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Reset your password</h2>
-                    <p className="mt-2 text-center text-sm text-gray-600">
-                        Enter your email address and we'll send you a link to reset your password
-                    </p>
+                    <h2 className="text-2xl font-bold">
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-500">
+                            Password Recovery
+                        </span>
+                    </h2>
+                    <p className="text-gray-500">Reset your password</p>
                 </div>
                 
                 {message && (
@@ -56,13 +59,13 @@ function ForgotPassword() {
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label htmlFor="email-address" className="sr-only">Email address</label>
-                            <input 
-                                id="email-address" 
-                                name="email" 
-                                type="email" 
-                                autoComplete="email" 
-                                required 
-                                className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
+                            <input
+                                id="email-address"
+                                name="email"
+                                type="email"
+                                autoComplete="email"
+                                required
+                                className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm" 
                                 placeholder="Email address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -71,9 +74,9 @@ function ForgotPassword() {
                     </div>
 
                     <div className="flex flex-col space-y-4">
-                        <button 
-                            type="submit" 
-                            className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white ${isLoading ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                        <button
+                            type="submit"
+                            className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white ${isLoading ? 'bg-amber-400' : 'bg-amber-600 hover:bg-amber-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500`}
                             disabled={isLoading}
                         >
                             {isLoading ? 'Sending...' : 'Reset Password'}
@@ -81,7 +84,7 @@ function ForgotPassword() {
                         
                         <Link 
                             to="/login" 
-                            className="w-full flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="w-full flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
                         >
                             Back to Login
                         </Link>

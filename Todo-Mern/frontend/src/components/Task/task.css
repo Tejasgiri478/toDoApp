@@ -2,3 +2,48 @@
     text-justify: distribute;
     word-wrap: break-word;
 }
+
+/* Button animations and effects */
+.task-actions button {
+    position: relative;
+    overflow: hidden;
+}
+
+.task-actions button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.4s ease-in-out;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+.task-actions button:hover::before {
+    left: 0;
+    transform: translateX(0);
+}
+
+.task-actions button svg {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(0.8);
+    }
+}
+
+.animate-pulse {
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
