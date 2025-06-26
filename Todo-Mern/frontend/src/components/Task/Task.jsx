@@ -12,13 +12,13 @@ import axios from '../../Axios/axios.js';
 function Task({ task, id }) {
     const { dispatch } = useContext(TaskContext);
     const { userToken } = useContext(TokenContext);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editTitle, setEditTitle] = useState(task.title);
-    const [editDescription, setEditDescription] = useState(task.description);
+    // const [isEditing, setIsEditing] = useState(false);
+    // const [editTitle, setEditTitle] = useState(task.title);
+    // const [editDescription, setEditDescription] = useState(task.description);
 
     const handleRemove = async (e) => {
         e.preventDefault();
-        
+
         const result = await Swal.fire({
             title: 'Are you sure?',
             text: 'This task will be permanently deleted!',
@@ -54,7 +54,7 @@ function Task({ task, id }) {
                         Authorization: `Bearer ${userToken}`
                     }
                 });
-                
+
                 dispatch({
                     type: "SET_TASK",
                     payload: allTasksResponse.data
@@ -149,19 +149,19 @@ function Task({ task, id }) {
 
         if (formValues) {
             try {
-                const response = await axios.put('/task/updateTask', 
-                    {
-                        id: task._id,
-                        title: formValues.title,
-                        description: formValues.description,
-                        category: formValues.category
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${userToken}`
-                        }
-                    }
-                );
+                // const response = await axios.put('/task/updateTask',
+                //     {
+                //         id: task._id,
+                //         title: formValues.title,
+                //         description: formValues.description,
+                //         category: formValues.category
+                //     },
+                //     {
+                //         headers: {
+                //             Authorization: `Bearer ${userToken}`
+                //         }
+                //     }
+                // );
 
                 // Force a refresh of all tasks to ensure UI is in sync with backend
                 const allTasksResponse = await axios.get('/task/getTask', {
@@ -169,7 +169,7 @@ function Task({ task, id }) {
                         Authorization: `Bearer ${userToken}`
                     }
                 });
-                
+
                 dispatch({
                     type: "SET_TASK",
                     payload: allTasksResponse.data
@@ -211,14 +211,14 @@ function Task({ task, id }) {
 
     const handleMarkDone = async (e) => {
         try {
-            const response = await axios.put('/task/markDone', 
-                { id: task._id },
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken}`
-                    }
-                }
-            );
+            // const response = await axios.put('/task/markDone',
+            //     { id: task._id },
+            //     {
+            //         headers: {
+            //             Authorization: `Bearer ${userToken}`
+            //         }
+            //     }
+            // );
 
             // Force a refresh of all tasks to ensure UI is in sync with backend
             const allTasksResponse = await axios.get('/task/getTask', {
@@ -226,7 +226,7 @@ function Task({ task, id }) {
                     Authorization: `Bearer ${userToken}`
                 }
             });
-            
+
             dispatch({
                 type: "SET_TASK",
                 payload: allTasksResponse.data
@@ -294,18 +294,18 @@ function Task({ task, id }) {
         <div className={`relative bg-white py-4 px-5 rounded-lg shadow-md mb-4 overflow-hidden
             border-l-4 border-${color}-500 hover:shadow-lg transition-all duration-200`}>
             <div className={`absolute top-0 left-0 w-full h-full opacity-5 bg-${color}-500`}></div>
-            
+
             <div className="flex items-start">
                 {/* Checkbox */}
                 <div className="mark-done z-10 mt-1 mr-3">
-                    <input 
-                        type="checkbox" 
-                        className={`h-5 w-5 rounded-md border-2 border-${color}-400 text-${color}-600 focus:ring-${color}-500 cursor-pointer transition-all duration-300 hover:shadow-md`} 
-                        onChange={handleMarkDone} 
-                        checked={task.completed} 
+                    <input
+                        type="checkbox"
+                        className={`h-5 w-5 rounded-md border-2 border-${color}-400 text-${color}-600 focus:ring-${color}-500 cursor-pointer transition-all duration-300 hover:shadow-md`}
+                        onChange={handleMarkDone}
+                        checked={task.completed}
                     />
                 </div>
-                
+
                 {/* Task Content */}
                 <div className="task-info text-gray-800 flex-grow z-10">
                     <h4 className={`task-title text-lg font-medium capitalize ${task.completed ? 'line-through text-gray-500' : ''}`}>
@@ -322,7 +322,7 @@ function Task({ task, id }) {
                                 <p>just now</p>
                             )}
                         </div>
-                        
+
                         {/* Category Badge */}
                         <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800 shadow-sm`}>
                             <span className="mr-1">{icon}</span>
@@ -330,18 +330,18 @@ function Task({ task, id }) {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Actions */}
                 <div className="task-actions flex items-center gap-3 z-10 ml-3">
-                    <button 
+                    <button
                         onClick={handleEdit}
                         className="p-2 bg-gradient-to-r from-blue-400 to-indigo-500 text-white rounded-full hover:from-blue-500 hover:to-indigo-600 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
                         title="Edit task"
                     >
                         <EditIcon style={{ fontSize: 18 }} className="animate-pulse" />
                     </button>
-                    
-                    <button 
+
+                    <button
                         onClick={handleRemove}
                         className="p-2 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400"
                         title="Delete task"

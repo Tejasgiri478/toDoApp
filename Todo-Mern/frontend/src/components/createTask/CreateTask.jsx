@@ -13,30 +13,30 @@ function CreateTask() {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [category, setCategory] = useState("others")
-    
+
     const handleAdd = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("/task/addTask", 
-                {
-                    title, 
-                    description, 
-                    category
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken}`
-                    }
-                }
-            );
-            
+            // const res = await axios.post("/task/addTask", 
+            //     {
+            //         title,
+            //         description,
+            //         category
+            //     },
+            //     {
+            //         headers: {
+            //             Authorization: `Bearer ${userToken}`
+            //         }
+            //     }
+            // );
+
             // Force a refresh of all tasks to ensure UI is in sync with backend
             const allTasksResponse = await axios.get('/task/getTask', {
                 headers: {
                     Authorization: `Bearer ${userToken}`
                 }
             });
-            
+
             dispatch({
                 type: "SET_TASK",
                 payload: allTasksResponse.data
@@ -45,7 +45,7 @@ function CreateTask() {
             setTitle("");
             setDescription("");
             setCategory("others");
-            
+
             Swal.fire({
                 title: 'Success!',
                 text: 'Your task has been added successfully',
@@ -80,7 +80,7 @@ function CreateTask() {
                         placeholder="Enter task title"
                     />
                 </div>
-                
+
                 <div className="mb-4">
                     <label htmlFor="description" className="block mb-2 font-medium text-gray-700">Description</label>
                     <textarea
@@ -99,10 +99,10 @@ function CreateTask() {
                 <div className="mb-6">
                     <label htmlFor="category" className="block mb-2 font-medium text-gray-700">Category</label>
                     <select
-                        name="category" 
+                        name="category"
                         id="category"
                         value={category}
-                        onChange={(e) => setCategory(e.target.value)} 
+                        onChange={(e) => setCategory(e.target.value)}
                         className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition-all'
                     >
                         <option value="personal">Personal</option>

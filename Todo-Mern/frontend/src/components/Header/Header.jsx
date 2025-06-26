@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { Outlet, NavLink, Link, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import TokenContext from '../../context/TokenContext.js';
 import "./header.css"
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
@@ -9,7 +9,7 @@ function Header() {
     const token = localStorage.getItem("authToken");
     const { user } = useContext(TokenContext);
     const navigate = useNavigate();
-    
+
     const logout = () => {
         localStorage.removeItem("authToken");
         window.location.href = "/login";
@@ -18,9 +18,9 @@ function Header() {
     const handleLogoClick = () => {
         if (token) {
             // If user is logged in, toggle to add task screen
-            const currentShowTaskList = localStorage.getItem('showTaskList');
-            localStorage.setItem('showTaskList', 'false');
-            navigate('/');
+            // const currentShowTaskList = localStorage.getItem('showTaskList');
+            // localStorage.setItem('showTaskList', 'false');
+            // navigate('/');
         } else {
             // If user is not logged in, go to login screen
             navigate('/login');
@@ -32,8 +32,8 @@ function Header() {
             <nav className='header bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg flex justify-between items-center relative overflow-hidden'>
                 {/* Background animation element */}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-70 animate-pulse"></div>
-                
-                <div 
+
+                <div
                     className="logo w-1/4 text-center cursor-pointer transform hover:scale-105 transition-all duration-300 z-10"
                     onClick={handleLogoClick}
                 >
@@ -58,11 +58,11 @@ function Header() {
                         ) : (
                             <ul className='flex justify-end gap-3 w-3/4 pr-6'>
                                 <li>
-                                    <NavLink 
+                                    <NavLink
                                         to="/login"
-                                        className={({isActive}) => 
-                                            isActive 
-                                                ? "block py-2 px-4 text-yellow-300 font-medium" 
+                                        className={({isActive}) =>
+                                            isActive
+                                                ? "block py-2 px-4 text-yellow-300 font-medium"
                                                 : "block py-2 px-4 text-white hover:text-yellow-300 transition-colors"
                                         }
                                     >
@@ -70,11 +70,11 @@ function Header() {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink 
+                                    <NavLink
                                         to="/register"
-                                        className={({isActive}) => 
-                                            isActive 
-                                                ? "block py-2 px-4 text-yellow-300 font-medium" 
+                                        className={({isActive}) =>
+                                            isActive
+                                                ? "block py-2 px-4 text-yellow-300 font-medium"
                                                 : "block py-2 px-4 text-white hover:text-yellow-300 transition-colors"
                                         }
                                     >

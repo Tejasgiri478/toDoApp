@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from "../../Axios/axios.js";
 import KeyIcon from '@mui/icons-material/Key';
-import { FaCheckCircle } from 'react-icons/fa';
+//import { FaCheckCircle } from 'react-icons/fa';
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");
@@ -42,19 +42,19 @@ function ForgotPassword() {
                     </h2>
                     <p className="text-gray-500">Reset your password</p>
                 </div>
-                
+
                 {message && (
                     <div className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
                         <span className="block sm:inline">{message}</span>
                     </div>
                 )}
-                
+
                 {error && (
                     <div className="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                         <span className="block sm:inline">{error}</span>
                     </div>
                 )}
-                
+
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
@@ -65,7 +65,7 @@ function ForgotPassword() {
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm" 
+                                className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-amber-500 focus:border-amber-500 focus:z-10 sm:text-sm"
                                 placeholder="Email address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -81,9 +81,9 @@ function ForgotPassword() {
                         >
                             {isLoading ? 'Sending...' : 'Reset Password'}
                         </button>
-                        
-                        <Link 
-                            to="/login" 
+
+                        <Link
+                            to="/login"
                             className="w-full flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
                         >
                             Back to Login

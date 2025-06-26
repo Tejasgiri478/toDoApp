@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TaskIndicator from './TaskIndicator';
 import CreateTask from './createTask/CreateTask';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { FaClipboardList } from 'react-icons/fa';
 
 function Layout() {
@@ -27,7 +27,7 @@ function Layout() {
                 <div className="flex flex-col">
                     <div className="mb-6 flex justify-between items-center">
                         <h1 className="text-2xl font-bold text-blue-700">Add Task</h1>
-                        <button 
+                        <button
                             onClick={() => setShowTaskList(true)}
                             className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-all transform hover:scale-105"
                         >
@@ -43,7 +43,7 @@ function Layout() {
                 <div className="flex flex-col">
                     <div className="mb-6 flex justify-between items-center">
                         <h1 className="text-2xl font-bold text-blue-700">Your Tasks</h1>
-                        <button 
+                        <button
                             onClick={() => setShowTaskList(false)}
                             className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-700 transition-all transform hover:scale-105"
                         >
